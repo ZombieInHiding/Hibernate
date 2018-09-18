@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="lti.ex7">
+
+	<class name="Movie" table="movie">
+		<id name="movieNo">
+			<generator class="assigned" /> <!-- Will be given manually, not automatically -->
+		</id>
+
+		<set name="characters" cascade="save-update,delete" inverse="true">
+			<key column="movieNo" on-delete="cascade" />
+			<one-to-many class="Character" />
+		</set>
+
+		<property name="movieName" type="string" length="30" />
+		<property name="movieGenre" type="string" length="30"  />
+	</class>
+
+	<class name="Character" table="chars">
+		<id name="charNo">
+			<generator class="assigned" />
+		</id>
+		<many-to-one name="movie" column="movieNo" not-null="true" />
+		<property name="charName" length="30" />
+	</class>
+</hibernate-mapping>
