@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+
+<hibernate-configuration>
+
+	<session-factory>
+
+		<!-- Database connection settings -->
+		<property name="connection.driver_class">oracle.jdbc.OracleDriver</property>
+		<property name="connection.url">jdbc:oracle:thin:@localhost:1521:xe</property>
+		<property name="connection.username">divya</property>
+		<property name="connection.password">divya</property>
+
+		<!-- JDBC connection pool (use the built-in) -->
+		<property name="connection.pool_size">1</property>
+
+		<!-- SQL dialect -->
+		<property name="dialect">org.hibernate.dialect.Oracle10gDialect</property>
+
+		<!-- Enable Hibernate's automatic session context management -->
+		<property name="current_session_context_class">thread</property>
+
+		<!-- Disable the second-level cache -->
+		<property name="cache.provider_class">org.hibernate.cache.internal.NoCacheProvider</property>
+
+		<!-- Echo all executed SQL to stdout -->
+		<property name="show_sql">true</property>
+
+		<!-- Drop and re-create the database schema on startup -->
+		<property name="hbm2ddl.auto">update</property>
+
+		<mapping class="lti.ex1.Product" />
+		<!-- <mapping class="lti.ex2.Customer" /> -->
+		<!-- <mapping class="lti.ex3.Book" /> -->
+		<!-- <mapping class="lti.ex4.Person" /> -->
+		<!-- <mapping class="lti.ex5.User" />
+		<mapping class="lti.ex5.Address" /> -->
+		<!-- <mapping class="lti.ex6.Department" />
+		<mapping class="lti.ex6.Employee" /> -->
+		<!-- <mapping class="lti.ex8.Customer" />
+		<mapping class="lti.ex8.Category" />
+		<mapping class="lti.ex8.Item" />
+		<mapping class="lti.ex8.Bid" /> -->
+		<!-- <mapping class="lti.ex9.tph.BankAccount" />
+		<mapping class="lti.ex9.tph.CreditCard" />
+		<mapping class="lti.ex9.tph.BillingDetails" /> -->
+		<!-- <mapping class="lti.ex9.tpc.BankAccount" />
+		<mapping class="lti.ex9.tpc.CreditCard" />
+		<mapping class="lti.ex9.tpc.BillingDetails" /> -->
+		<!-- <mapping class="lti.ex9.tps.BankAccount" />
+		<mapping class="lti.ex9.tps.CreditCard" />
+		<mapping class="lti.ex9.tps.BillingDetails" /> -->
+
+	</session-factory>
+
+</hibernate-configuration>
