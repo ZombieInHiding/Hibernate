@@ -51,7 +51,8 @@ public class TestProduct {
 		Session session = factory.getCurrentSession();
 		Transaction txn = session.beginTransaction();
 		
-		Product p =(Product) session.get(Product.class, 2);
+		Product p =(Product) session.load(Product.class, 3);
+		//session.get() and session.load() work the same
 		p.setPrice(119999.99);  // Update in attached scenario
 		txn.commit();
 		

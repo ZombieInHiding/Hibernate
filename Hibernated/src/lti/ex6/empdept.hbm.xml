@@ -10,7 +10,10 @@
 			<generator class="assigned" /> <!-- Will be given manually, not automatically -->
 		</id>
 
-		<set name="employees" cascade="save-update,delete" inverse="true">
+		<set name="employees" cascade="save-update,delete" inverse="true"
+			fetch="join">
+			<!-- lazy="false' gets both tables - depends on application -->
+			<!-- fetch="join" fetches using join condition -->
 			<key column="deptno" on-delete="cascade" />
 			<one-to-many class="Employee" />
 		</set>

@@ -9,6 +9,7 @@ public class Person {
 	
 	public static class Id implements Serializable{
 	
+		private static final long serialVersionUID = 1L;
 		private String country;
 		private int medicareNumber;
 		

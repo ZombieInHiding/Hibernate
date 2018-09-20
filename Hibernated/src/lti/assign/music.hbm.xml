@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="lti.assign">
+	<class name="Song" table="songs">
+		<id name="songId" column="song_id">
+			<generator class="increment" />
+		</id>
+		<property name="songName" column="song_name" length="30" />
+		<many-to-one name="artist" column="artist_id" class="Artist"
+			not-null="true" />
+		<many-to-one name="album" column="album_id" class="Album"
+			not-null="true" />
+		<many-to-one name="genre" column="genre_id" class="Genre"
+			not-null="true" />
+	</class>
+
+	<class name="Artist" table="artists">
+		<id name="artistId" column="artist_id">
+			<generator class="increment" />
+		</id>
+		<property name="artistName" column="artist_name" length="30" />
+
+		<set name="songs" inverse="true" cascade="all">
+			<key column="artist_id" />
+			<one-to-many class="Song" />
+		</set>
+
+		<set name="albums" inverse="true" cascade="all">
+			<key column="artist_id" />
+			<one-to-many class="Album" />
+		</set>
+	</class>
+	
+	<class name="Album" table="albums">
+		<id name="albumId" column="album_id">
+			<generator class="increment" />
+		</id>
+		<property name="albumName" column="album_name" length="30" />
+
+		<set name="songs" inverse="true" cascade="all">
+			<key column="album_id" />
+			<one-to-many class="Song" />
+		</set>
+
+		<many-to-one name="artist" column="artist_id" class="Artist"
+			not-null="true" />
+	</class>
+	
+	<class name="Genre" table="genres">
+		<id name="genreId" column="genre_id">
+			<generator class="increment" />
+		</id>
+		<property name="genreName" column="genre_name" length="30" />
+	</class>
+	
+</hibernate-mapping>

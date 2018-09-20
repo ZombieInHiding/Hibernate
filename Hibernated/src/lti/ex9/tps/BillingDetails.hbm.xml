@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="lti.ex9">
+
+	<class name="BillingDetails" table="billing_details_4">
+		<id name="id" column="billing_id" type="int">
+			<generator class="increment" />
+		</id>
+
+		<property name="holder" length="30" />
+		<property name="number" column="no" />
+
+		<joined-subclass name="CreditCard" table="creditcard_details_4">
+			<key column="billing_id" /><!-- foreign key -->
+			<property name="type" column="card_type" />
+			<property name="expiry" />
+		</joined-subclass>
+
+		<joined-subclass name="BankAccount" table="bankaccount_details_4">
+			<key column="billing_id" />
+			<property name="bankName" column="bank_name" />
+		</joined-subclass>
+	</class>
+
+</hibernate-mapping>
