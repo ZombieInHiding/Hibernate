@@ -1,13 +1,15 @@
 package lti.ex1;
 
-import java.util.Iterator;
 import java.util.List;
 
+import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Restrictions;
 import org.junit.Test;
 
 import lti.util.HibernateUtil;
@@ -172,5 +174,53 @@ public class TestProduct {
 		
 		factory.close();
 
+	}
+	
+	@Test
+	public void testCriteria() {
+		SessionFactory factory = HibernateUtil.getFactory();
+		Session session = factory.getCurrentSession();
+		session.beginTransaction();
+		
+		/*//fires select statement
+		Criteria criteria = session.createCriteria(Product.class);
+		List<Product> products = criteria.list();
+		for (Product p : products)
+			System.out.println(p.getName() + ": " + p.getPrice());*/
+		
+		//fires select statement with where clause
+		Criteria criteria = session.createCriteria(Product.class);
+		criteria.add(Restrictions.between("price", 10000.0, 100000.0)); //between
+		criteria.add(Restrictions.ilike("name", "%d%")); //like
+		criteria.addOrder(Order.asc("price"));
+		
+		List<Product> products = criteria.list();
+		for (Product p : products)
+			System.out.println(p.getName() + ": " + p.getPrice());
+		
+		factory.close();
+	}
+	
+	@Test
+	public void testCaching() {
+		SessionFactory factory = HibernateUtil.getFactory();
+		//L2 Cache - factory level cache explicit EHCache
+		Session session1 = factory.getCurrentSession();
+		session1.beginTransaction();
+		//L1 Cache - Session level cache implicit
+		Product p1 = (Product) session1.get(Product.class, 1);
+		System.out.println(p1.getName());
+		
+		Product p2 = (Product) session1.get(Product.class, 1);
+		System.out.println(p2.getName());
+		session1.close();
+		
+		Session session2 = factory.getCurrentSession();
+		session2.beginTransaction();
+		Product p3 = (Product) session2.get(Product.class, 1);
+		System.out.println(p3.getName());
+		
+		session2.close();
+		factory.close();
 	}
 }
